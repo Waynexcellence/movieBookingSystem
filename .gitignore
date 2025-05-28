@@ -1,0 +1,8 @@
+backend/*.class
+frontend/*.class
+share/*.class
+user
+film
+theater
+movie
+ticket

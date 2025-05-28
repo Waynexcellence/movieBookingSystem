@@ -1,1 +1,31 @@
 # movieBookingSystem
+
+- written in `Java`
+- version `21.0.7`
+
+- 啟動方式
+	- 初始化資料庫
+		- 可以設定的資料
+			- User
+			- Film
+			- Theater
+			- Movie
+			- Ticket
+		- 可以使用預設的資料或是你自己設定
+		- 在`movieBookingSystem`中，使用`java backend.Clear`
+			- 先清除所有資料
+			- 創建預設資料(可選)
+		- `java backend.[User/Film/Theater/Movie/Ticket]`
+			- 先清除所有資料
+			- 創建預設/自訂/不創建資料
+	- 啟動伺服器(後端)
+		- 在`movieBookingSystem`中，使用`java backend.Server`
+		- 若是`Windows`，可以點擊`movieBookingSystem`中的`server.bat`
+	- 啟動買票者、賣票者的程式(前端)
+		- 買票者
+			- 在`movieBookingSystem`中，使用`java frontend.Customer`
+			- 若是`Windows`，可以點擊`movieBookingSystem`中的`customer.bat`
+		- 賣票者
+			- 在`movieBookingSystem`中，使用`java frontend.Merchant`
+			- 若是`Windows`，可以點擊`movieBookingSystem`中的`merchant.bat`
+
