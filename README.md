@@ -2,7 +2,9 @@
 
 - written in `Java`
 - version `21.0.7`
-
+- 編譯方式
+	- `javac frontend\*.java backend\*.java share\*.java`
+	- 若是`Windows`，可以點擊`movieBookingSystem`中的`compile.bat`
 - 啟動方式
 	- 初始化資料庫
 		- 可以設定的資料
