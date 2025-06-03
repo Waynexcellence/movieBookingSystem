@@ -23,21 +23,6 @@ public class Conversation implements Serializable {
 		this.data = data;
 	}
 
-	// // this method currently doesn't be used
-	// public <T> List<T> getDataAs(Class<T> clazz) {
-	// 	if (this.data instanceof List<?>) {
-	// 		List<?> dataList = (List<?>) this.data;
-	// 		for (Object obj : dataList) {
-	// 			if (!clazz.isInstance(obj)) {
-	// 				throw new ClassCastException("Data contains an element that is not of type " + clazz.getName());
-	// 			}
-	// 		}
-	// 		return (List<T>) this.data;
-	// 	} else {
-	// 		throw new ClassCastException("Data is not a List of " + clazz.getName());
-	// 	}
-	// }
-
 	public String toString() {
 		return this.toString(0);
 	}

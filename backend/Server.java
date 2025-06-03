@@ -63,10 +63,23 @@ public class Server {
 			Conversation task = Server.receive(clientSocket);
 			List<Object> response = new ArrayList<>();
 			if (task == null) break;
-			if (task.role == Role.Customer) {
-				response = Server.handleCustomer(task);
-			} else if (task.role == Role.Merchant) {
-				response = Server.handleMerchant(task);
+			userLock.lock();
+			filmLock.lock();
+			movieLock.lock();
+			theaterLock.lock();
+			ticketLock.lock();
+			try {
+				if (task.role == Role.Customer) {
+					response = Server.handleCustomer(task);
+				} else if (task.role == Role.Merchant) {
+					response = Server.handleMerchant(task);
+				}
+			} finally {
+				userLock.unlock();
+				filmLock.unlock();
+				movieLock.unlock();
+				theaterLock.unlock();
+				ticketLock.unlock();
 			}
 			System.out.println("Server response:\n" + response);
 			Server.send(clientSocket, response);
