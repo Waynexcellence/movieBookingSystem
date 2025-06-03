@@ -23,7 +23,7 @@ public class Merchant {
 
 	public static void connect() {
 		try {
-			Merchant.socket = new Socket(Helper.getIPAddress(), Conversation.port);
+			Merchant.socket = new Socket(Helper.getIPAddress(), Helper.getPort());
 		} catch ( Exception e ) {
 			e.printStackTrace();
 			System.exit(-1);

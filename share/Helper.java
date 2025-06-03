@@ -44,5 +44,31 @@ public class Helper implements Serializable {
             }
         }
     }
+	public static int getPort() {
+		int minPort = 2048;
+		int maxPort = 65535;
+        Scanner scanner = new Scanner(System.in);
+        String input;
+
+        while (true) {
+            System.out.print("請輸入 Port 號碼, 或直接按 Enter 使用預設值(" + Conversation.port + ")\n\t: ");
+            input = scanner.nextLine().trim();
+
+            if (input.isEmpty()) {
+                return Conversation.port;
+            }
+
+            try {
+                int port = Integer.parseInt(input);
+                if (port >= minPort && port <= maxPort) {
+                    return port;
+                } else {
+                    System.out.println("錯誤: port 號碼必須介於 " + minPort + " - " + maxPort + ": ");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("錯誤: 請輸入數字。");
+            }
+        }
+    }
 
 }

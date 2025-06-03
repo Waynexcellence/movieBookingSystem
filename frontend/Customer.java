@@ -23,7 +23,7 @@ public class Customer {
 
 	public static void connect() {
 		try {
-			Customer.socket = new Socket(Helper.getIPAddress(), Conversation.port);
+			Customer.socket = new Socket(Helper.getIPAddress(), Helper.getPort());
 		} catch ( Exception e ) {
 			e.printStackTrace();
 			System.exit(-1);

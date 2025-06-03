@@ -9,6 +9,7 @@ import java.util.concurrent.locks.*;
 import share.Role;
 import share.Action;
 import share.Conversation;
+import share.Helper;
 
 public class Server {
 
@@ -365,11 +366,12 @@ public class Server {
 	}
 
 	public static void main(String[] args) {
-		try (ServerSocket serverSocket = new ServerSocket(Conversation.port)) {
+		int listeningPort = Helper.getPort();
+		try (ServerSocket serverSocket = new ServerSocket(listeningPort)) {
 			URL url = URI.create("http://checkip.amazonaws.com").toURL();
 			BufferedReader amazonawsReader = new BufferedReader(new InputStreamReader(url.openStream()));
 			System.out.println("Server IP address is on: " + amazonawsReader.readLine());
-			System.out.println("Server listening on port " + Conversation.port);
+			System.out.println("Server listening on port " + listeningPort);
 			User.open();
 			Film.open();
 			Theater.open();
