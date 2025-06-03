@@ -353,7 +353,7 @@ public class Movie extends ReadOneObject implements Serializable {
 		  .append(Date.color)
 		  .append(indent).append(this.date.toString(level+1)).append("\n")
 		  .append(Movie.color)
-		  .append(indent).append("\t播放時間: ").append(this.time).append("\n")
+		  .append(indent).append("\t播放時間: ").append(this.time+":00").append("\n")
 		  .append(indent).append("\tvalid: ").append(this.valid).append("\n")
 		  .append(indent).append("}")
 		  .append(Color.RESET);
