@@ -32,7 +32,7 @@ public class Helper implements Serializable {
         Pattern ipPattern = Pattern.compile("^140\\.112\\.(\\d{1,3})\\.(\\d{1,3})$");
 
         while (true) {
-            System.out.print("請輸入 IP 位址, 格式為 140.112.xxx.xxx, 或直接按 Enter 使用 localhost: ");
+            System.out.print("請輸入 IP 位址, 格式為 140.112.xxx.xxx, 或直接按 Enter 使用 localhost\n\t: ");
             input = scanner.nextLine().trim();
             if (input.isEmpty()) {
                 return "localhost";
