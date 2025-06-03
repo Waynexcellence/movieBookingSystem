@@ -132,7 +132,7 @@ public class Ticket extends ReadOneObject implements Serializable {
 			} catch ( IllegalArgumentException e3 ) {
 				System.out.println(e3.getMessage());
 			}
-			System.out.print("I think you type the wrobg uid of user: ");
+			System.out.print("I think you type the wrong uid of user: ");
 			continue;
         }
 	} 
@@ -177,7 +177,7 @@ public class Ticket extends ReadOneObject implements Serializable {
 			} catch ( IllegalArgumentException e3 ) {
 				System.out.println(e3.getMessage());
 			}
-			System.out.println("I think you type the wrobg uid of ticket: ");
+			System.out.println("I think you type the wrong uid of ticket: ");
 			continue;
         }
 	}

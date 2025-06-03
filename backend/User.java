@@ -114,7 +114,7 @@ public class User extends ReadOneObject implements Serializable {
 		User user = new User();
 		Scanner scanner = new Scanner(System.in);
 		while(true){
-			System.out.print("mail: ");
+			System.out.print("信箱: ");
 			try {
 				String mail = scanner.nextLine();
 				user.setMail(mail);
@@ -131,7 +131,7 @@ public class User extends ReadOneObject implements Serializable {
 		User user = new User();
 		Scanner scanner = new Scanner(System.in);
 		while(true){
-			System.out.print("password: ");
+			System.out.print("密碼: ");
 			try {
 				String password = scanner.nextLine();
 				user.setPassword(password);
@@ -146,7 +146,7 @@ public class User extends ReadOneObject implements Serializable {
 	}
 	public static User requireUser() {
 		User user = new User();
-		Date date = Date.requireDate("birth date");
+		Date date = Date.requireDate("生日");
 		user.setDate(date);
 		String mail = User.requireMail();
 		user.setMail(mail);
@@ -234,8 +234,8 @@ public class User extends ReadOneObject implements Serializable {
 		  .append(Date.color)
 		  .append(indent).append("").append(this.date.toString(level+1)).append("\n")
 		  .append(User.color)
-		  .append(indent).append("\tmail: ").append(this.mail).append("\n")
-		  .append(indent).append("\tpassword: ").append(this.password).append("\n")
+		  .append(indent).append("\t信箱: ").append(this.mail).append("\n")
+		  .append(indent).append("\t密碼: ").append(this.password).append("\n")
 		  .append(indent).append("\tvalid: ").append(this.valid).append("\n")
 		  .append(indent).append("}")
 		  .append(Color.RESET);

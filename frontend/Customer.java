@@ -58,7 +58,7 @@ public class Customer {
 		Customer.send(Action.Create, List.of(user));
 		Object object = Customer.receive().get(0);
 		if( object instanceof User ){
-			System.out.println("Create success:\n" + object);
+			System.out.println("註冊成功:\n" + object);
 		} else if (object instanceof String ) {
 			System.out.println(Helper.longLine);
 			System.out.println("error: " + object);
@@ -91,14 +91,14 @@ public class Customer {
 	}
 	private static User updateUser(User user) {							// return original one if failed or customer quit
 		if( user==null || user.getUid()<0 || !user.getValid() ){
-			System.out.println("You have not login.");
+			System.out.println("尚未登入.");
 			return new User();
 		}
 		User origin = new User(user);
 		Scanner scanner = new Scanner(System.in);
 		while (true) {
-			System.out.println("current User:\n" + user );
-			char modify = Helper.getOneCharInput("which value you want to update? [password(p)/mail(m)/finish(f)/quit(q)]", "pmfq");
+			System.out.println("更改中的使用者資訊:\n" + user );
+			char modify = Helper.getOneCharInput("想更改什麼值? [password(p)/mail(m)/finish(f)/quit(q)]", "pmfq");
 			try {
 				if( modify == 'p' ) {
 					String password = User.requirePassword();
@@ -130,7 +130,7 @@ public class Customer {
 	}
 	private static List<Movie> browseMovie(User user) {					// browse all valid movies
 		if( user==null || user.getUid()<0 || !user.getValid() ){
-			System.out.println("You have not login.");
+			System.out.println("尚未登入.");
 			return new ArrayList<>();
 		}
 		Customer.send(Action.Browse, List.of(new Movie()));
@@ -149,7 +149,7 @@ public class Customer {
 	}
 	private static void browseTheaterInMovie(User user) {				// display the specific movie status
 		if( user==null || user.getUid()<0 || !user.getValid() ){
-			System.out.println("You have not login.");
+			System.out.println("尚未登入.");
 			return ;
 		}
 		List<Movie> movies = Customer.browseMovie(user);
@@ -159,7 +159,7 @@ public class Customer {
 	}
 	private static Ticket createTicket(User user) {						// create ticket = buy ticket
 		if( user==null || user.getUid()<0 || !user.getValid() ){
-			System.out.println("You have not login.");
+			System.out.println("尚未登入.");
 			return new Ticket();
 		}
 		List<Movie> movies = Customer.browseMovie(user);
@@ -170,7 +170,7 @@ public class Customer {
 		Customer.send(Action.Create, List.of(ticket));
 		Object object = Customer.receive().get(0);
 		if( object instanceof Ticket ){
-			System.out.println("create success:");
+			System.out.println("訂票成功:");
 			return (Ticket) object;
 		} else if (object instanceof String ) {
 			System.out.println(Helper.longLine);
@@ -182,7 +182,7 @@ public class Customer {
 	}
 	private static List<Ticket> browseTicket(User user) {				// get all tickets belonging to user
 		if( user==null || user.getUid()<0 || !user.getValid() ){
-			System.out.println("You have not login.");
+			System.out.println("尚未登入.");
 			return new ArrayList<>();
 		}
 		List<Ticket> tickets = new ArrayList<>();
@@ -203,11 +203,11 @@ public class Customer {
 	}
 	private static List<Ticket> browseTicket(User user, Movie movie) {	// get all ticket belong to the specific movie, 
 		if( user==null || user.getUid()<0 || !user.getValid() ){
-			System.out.println("You have not login.");
+			System.out.println("尚未登入.");
 			return new ArrayList<>();
 		}
 		if( movie==null || movie.getUid()<0 || !movie.getValid() ){
-			System.out.println("you can't watch the invalid movie's ticket status.");
+			System.out.println("無法觀看非法電影的狀態.");
 			return new ArrayList<>();
 		}
 		List<Ticket> tickets = new ArrayList<>();
@@ -229,16 +229,16 @@ public class Customer {
 	}
 	private static Ticket deleteTicket(User user) {						// return new Ticket() if failed
 		if( user==null || user.getUid()<0 || !user.getValid() ) {
-			System.out.println("You have not login.");
+			System.out.println("尚未登入.");
 			return new Ticket();
 		}
 		List<Ticket> tickets = Customer.browseTicket(user);
 		if( tickets.size() == 0 ) {
-			System.out.println("you don't have any ticket that can be deleted.");
+			System.out.println("你沒有可以退的票.");
 			return new Ticket();
 		}
 		Ticket ticket = Ticket.chooseTicket(tickets);
-		System.out.println("make sure that you want to delete the Ticket:\n" + ticket );
+		System.out.println("請確定你想退這張票:\n" + ticket );
 		char confirm = Helper.getOneCharInput("Confirm? [y/n]: ", "yn");
 		if( confirm == 'y' ) {
 			Customer.send(Action.Delete, List.of(ticket));
@@ -290,13 +290,13 @@ public class Customer {
 			else {
 				StringBuilder sb = new StringBuilder();
 				sb.append("You can\n")
-				  .append("\t(0) watch available movies\n")
-				  .append("\t(1) display the available movie status\n")
-				  .append("\t(2) watch tickets\n")
-				  .append("\t(3) buy ticket\n")
-				  .append("\t(4) refund ticket\n")
-				  .append("\t(5) update user information\n")
-				  .append("\t(6) logout\n");
+				  .append("\t(0) 查詢上映中的電影\n")
+				  .append("\t(1) 查詢上映中電影的座位\n")
+				  .append("\t(2) 查詢擁有的票\n")
+				  .append("\t(3) 買票\n")
+				  .append("\t(4) 退票\n")
+				  .append("\t(5) 更新使用者資訊\n")
+				  .append("\t(6) 登出\n");
 				char action = Helper.getOneCharInput(sb.toString()+"\t: ", "0123456");
 				if( action == '0' ) {
 					List<Movie> movies = Customer.browseMovie(user);
@@ -305,7 +305,7 @@ public class Customer {
 						System.out.println(movie);
 					}
 					if( movies.size() == 0 ) {
-						System.out.println("沒有可以購買的電影.");
+						System.out.println("無上映中的電影，故無法訂票.");
 					}
 					System.out.println(Helper.longLine);
 				}
@@ -319,23 +319,23 @@ public class Customer {
 						System.out.println(ticket);
 					}
 					if( tickets.size() == 0 ) {
-						System.out.println("there is no any ticket you search about.");
+						System.out.println("沒有符合的票.");
 					}
 					System.out.println(Helper.longLine);
 				}
 				if( action == '3' ) {
 					Ticket ticket = Customer.createTicket(user);
-					if( ticket.getValid() ) System.out.println("This is your new ticket:\n" + ticket);
+					if( ticket.getValid() ) System.out.println("以下是你查詢到的票:\n" + ticket);
 				}
 				if( action == '4' ) {
 					Ticket ticket = Customer.deleteTicket(user);
 					if( ticket.getUserId()==user.getUid() ){
-						System.out.println("This is your deleted ticket:\n" + ticket);
+						System.out.println("以下是你退成功的票:\n" + ticket);
 					}
 				}
 				if( action == '5' ) {
 					user = Customer.updateUser(user);
-					System.out.println("This is your updated user:\n" + user );
+					System.out.println("以下是你成功更新的使用者資訊:\n" + user );
 				}
 				if( action == '6' ) {
 					user = null;

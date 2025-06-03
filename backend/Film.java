@@ -106,7 +106,7 @@ public class Film extends ReadOneObject implements Serializable {
 		Film film = new Film();
 		Scanner scanner = new Scanner(System.in);
 		while ( true ) {
-			System.out.print("title: ");
+			System.out.print("標題: ");
 			try {
 				String title = scanner.nextLine();
 				film.setTitle(title);
@@ -120,7 +120,7 @@ public class Film extends ReadOneObject implements Serializable {
 			break;
 		}
 		while ( true ) {
-			System.out.print("summary: ");
+			System.out.print("大綱: ");
 			try {
 				String summary = scanner.nextLine();
 				film.setSummary(summary);
@@ -134,7 +134,7 @@ public class Film extends ReadOneObject implements Serializable {
 			break;
 		}
 		while ( true ) {
-			System.out.print("length: ");
+			System.out.print("時長: ");
 			try {
 				int length = scanner.nextInt();
 				scanner.nextLine();
@@ -153,7 +153,7 @@ public class Film extends ReadOneObject implements Serializable {
 			break;
 		}
 		while ( true ) {
-			System.out.print("classification: ");
+			System.out.print("分級: ");
 			try {
 				int classification = scanner.nextInt();
 				scanner.nextLine();
@@ -279,10 +279,10 @@ public class Film extends ReadOneObject implements Serializable {
 		sb.append(Film.color)
 		  .append(indent).append("Film {\n")
 		  .append(indent).append("\tuid: ").append(this.uid).append("\n")
-		  .append(indent).append("\ttitle: ").append(this.title).append("\n")
-		  .append(indent).append("\tsummary: ").append(this.summary).append("\n")
-		  .append(indent).append("\tlength: ").append(this.length).append("\n")
-		  .append(indent).append("\tclassification: ").append(this.classification).append("\n")
+		  .append(indent).append("\t標題: ").append(this.title).append("\n")
+		  .append(indent).append("\t大綱: ").append(this.summary).append("\n")
+		  .append(indent).append("\t時長: ").append(this.length).append("\n")
+		  .append(indent).append("\t分級: ").append(this.classification).append("\n")
 		  .append(indent).append("\tvalid: ").append(this.valid).append("\n")
 		  .append(indent).append("}")
 		  .append(Color.RESET);;

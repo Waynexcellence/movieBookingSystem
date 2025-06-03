@@ -153,7 +153,7 @@ public class Movie extends ReadOneObject implements Serializable {
         Movie movie = new Movie();
 		Scanner scanner = new Scanner(System.in);
         while ( true ) {
-			System.out.print("Enter your " + forWhat + ": ");
+			System.out.print("請輸入 " + forWhat + ": ");
 			try {
 				int time = scanner.nextInt();
 				scanner.nextLine();
@@ -183,9 +183,9 @@ public class Movie extends ReadOneObject implements Serializable {
         movie.setFilm(film);
         Theater theater = Theater.chooseTheater(theaters);
         movie.setTheater(theater);
-        Date date = Date.requireDate("movie play date");
+        Date date = Date.requireDate("電影上映日期");
         movie.setDate(date);
-        int time = Movie.requireTime("movie play time");
+        int time = Movie.requireTime("電影播放時間");
         movie.setTime(time);
         return movie;
     }
@@ -269,8 +269,8 @@ public class Movie extends ReadOneObject implements Serializable {
         this.date = new Date(date);
     }
     public void setTime(int time) throws IllegalArgumentException {
-        if( time > 22 ) throw new IllegalArgumentException("Who watch movie after 22:00 ?");
-        if( time < 3 ) throw new IllegalArgumentException("Who watch movie before 03:00 ?");
+        if( time > 22 ) throw new IllegalArgumentException("這裡沒有 22:00 以後的電影");
+        if( time < 3 ) throw new IllegalArgumentException("這裡沒有 03:00 以前的電影");
         this.time = time;
     }
     void setValid(boolean valid) {
@@ -347,13 +347,13 @@ public class Movie extends ReadOneObject implements Serializable {
 		sb.append(Movie.color)
 		  .append(indent).append("Movie {\n")
 		  .append(indent).append("\tuid: ").append(this.uid).append("\n")
-		  .append(indent).append("").append(this.film.toString(level+1)).append("\n")
+		  .append(indent).append(this.film.toString(level+1)).append("\n")
 		  .append(Theater.color)
-		  .append(indent).append("").append(this.theater.toString(level+1)).append("\n")
+		  .append(indent).append(this.theater.toString(level+1)).append("\n")
 		  .append(Date.color)
-		  .append(indent).append("").append(this.date.toString(level+1)).append("\n")
+		  .append(indent).append(this.date.toString(level+1)).append("\n")
 		  .append(Movie.color)
-		  .append(indent).append("\ttime: ").append(this.time).append("\n")
+		  .append(indent).append("\t播放時間: ").append(this.time).append("\n")
 		  .append(indent).append("\tvalid: ").append(this.valid).append("\n")
 		  .append(indent).append("}")
 		  .append(Color.RESET);

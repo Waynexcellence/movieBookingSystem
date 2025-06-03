@@ -243,8 +243,8 @@ public class Theater extends ReadOneObject implements Serializable {
 		sb.append(Theater.color)
 		  .append(indent).append("Theater {\n")
 		  .append(indent).append("\tuid: ").append(this.uid).append("\n")
-		  .append(indent).append("\tname: ").append(this.name).append("\n")
-		  .append(indent).append("\tseatAmount: ").append(this.seatAmount).append("\n")
+		  .append(indent).append("\t影廳名稱: ").append(this.name).append("\n")
+		  .append(indent).append("\t座位數量: ").append(this.seatAmount).append("\n")
 		  .append(indent).append("\tvalid: ").append(this.valid).append("\n")
 		  .append(indent).append("}")
 		  .append(Color.RESET);
