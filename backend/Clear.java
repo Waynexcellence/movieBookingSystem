@@ -2,6 +2,7 @@ package backend;
 
 import share.Color;
 import share.Helper;
+import share.AESCrypto;
 
 public class Clear {
     
@@ -19,8 +20,14 @@ public class Clear {
         Ticket.truncate();
 
 		if( Helper.getOneCharInput("要使用預設的資料嗎? [y/n]: ", "yn") == 'y' ) {
-			User user0 = new User(new Date(2000, 10, 10), "pass0", "mail0", true, 0);
-			User user1 = new User(new Date(2001, 11, 11), "pass1", "mail1", true, 1);
+			User user0 = null;
+			User user1 = null;
+			try {
+				user0 = new User(new Date(2000, 1, 1), AESCrypto.encrypt("pass0"), "mail0", true, 0);
+				user1 = new User(new Date(2001, 2, 2), AESCrypto.encrypt("pass1"), "mail1", true, 1);
+			} catch ( Exception e ) {
+				System.out.println("encrypt error" + e );
+			}
 			User.writeUser(user0);
 			User.writeUser(user1);
 
@@ -60,6 +67,12 @@ public class Clear {
 			Ticket.writeTicket(ticket2);
 			Ticket.writeTicket(ticket3);
 			for(User item:User.readAll()){
+				try {
+					System.out.println(item.getPassword());
+					item.setPassword(AESCrypto.decrypt(item.getPassword()));
+				} catch ( Exception e ) {
+					System.out.println("decrypt error" + e );
+				}
 				System.out.println(item);
 			}
 			for(Film item:Film.readAll()){

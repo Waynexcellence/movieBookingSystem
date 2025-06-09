@@ -5,6 +5,7 @@ import java.util.*;
 
 import share.Color;
 import share.Helper;
+import share.AESCrypto;
 
 public class User extends ReadOneObject implements Serializable {
 
@@ -246,14 +247,25 @@ public class User extends ReadOneObject implements Serializable {
 		User.open();
 		User.truncate();
 		if( Helper.getOneCharInput("create user by yourself or by default? [y/d]: ", "yd") == 'd' ){
-			User user0 = new User(new Date(2000, 1, 1), "pass0", "mail0", true, 0);
-			User user1 = new User(new Date(2001, 2, 2), "pass1", "mail1", true, 1);
+			User user0 = null;
+			User user1 = null;
+			try {
+				user0 = new User(new Date(2000, 1, 1), AESCrypto.encrypt("pass0"), "mail0", true, 0);
+				user1 = new User(new Date(2001, 2, 2), AESCrypto.encrypt("pass1"), "mail1", true, 1);
+			} catch ( Exception e ) {
+				System.out.println("encrypt error" + e );
+			}
 			User.writeUser(user0);
 			User.writeUser(user1);
 		} else {
 			while ( true ) {
 				if( Helper.getOneCharInput("create one user? [y/n]: ", "yn") == 'n' ) break;
 				User created = User.requireUser();
+				try {
+					created.setPassword(AESCrypto.encrypt(created.getPassword()));
+				} catch ( Exception e ) {
+					System.out.println("encrypt error" + e );
+				}
 				System.out.println("created = " + created );
 				created.setUid( User.findFirstValidPosition() );
 				created.setValid( true );
@@ -262,6 +274,11 @@ public class User extends ReadOneObject implements Serializable {
 		}
 		System.out.println("All data stored in user:");
 		for(User user:User.readAll()){
+			try {
+				user.setPassword(AESCrypto.decrypt(user.getPassword()));
+			} catch ( Exception e ) {
+				System.out.println("decrypt error" + e );
+			}
 			System.out.println(user);
 		}
 		if( Helper.getOneCharInput("truncate all user? [y/n]: ", "yn") == 'y' ) User.truncate();
