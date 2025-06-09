@@ -295,6 +295,12 @@ public class Server {
 			response.add("you want to delete the invalid movie.");
 			return response;
 		}
+		for( Ticket ticket: Ticket.readAll() ) {
+			if( ticket.getMovieId()==movie.getUid() ) {
+				ticket.setValid(false);
+				Ticket.writeTicket(ticket);
+			}
+		}
 		movie.setValid(false);
 		Movie.writeMovie(movie);
 		response.add(movie);
