@@ -31,10 +31,10 @@ public class Clear {
 			User.writeUser(user0);
 			User.writeUser(user1);
 
-			Film film0 = new Film("Captain America: Brave New World", "Marvel Cinematic Universe", 2, 12, true, 0);
-			Film film1 = new Film("Mobile Suit Gundam GQuuuuuuX: Beginning", "EVA, MSG", 1, 0, true, 1);
-			Film film2 = new Film("The Uniform", "Adult's pain", 1, 0, true, 2);
-			Film film3 = new Film("The Monkey", "Steven", 1, 18, true, 3);
+			Film film0 = new Film("美國隊長：無畏新世界", "Marvel Cinematic Universe", 2, 12, true, 0);
+			Film film1 = new Film("機動戰士Gundam GquuuuuuX -Beginning-", "EVA, MSG", 1, 0, true, 1);
+			Film film2 = new Film("夜校女生", "Adult's pain", 1, 0, true, 2);
+			Film film3 = new Film("史蒂芬金之猴子", "Steven", 1, 18, true, 3);
 			Film.writeFilm(film0);
 			Film.writeFilm(film1);
 			Film.writeFilm(film2);
