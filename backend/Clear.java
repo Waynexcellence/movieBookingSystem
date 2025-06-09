@@ -86,7 +86,6 @@ public class Clear {
 			Ticket.writeTicket(ticket15);
 			for(User item:User.readAll()){
 				try {
-					System.out.println(item.getPassword());
 					item.setPassword(AESCrypto.decrypt(item.getPassword()));
 				} catch ( Exception e ) {
 					System.out.println("decrypt error" + e );
