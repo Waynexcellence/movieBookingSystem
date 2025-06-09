@@ -16,6 +16,7 @@ import share.Role;
 import share.Action;
 import share.Conversation;
 import share.Helper;
+import share.AESCrypto;
 
 public class Customer {
 	private static Socket socket = null;
@@ -55,9 +56,20 @@ public class Customer {
 
 	private static void createUser() {									// create user = register user
 		User user = User.requireUser();
+		try {
+			user.setPassword(AESCrypto.encrypt(user.getPassword()));
+		} catch ( Exception e ) {
+			System.out.println("encrypt error" + e );
+		}
 		Customer.send(Action.Create, List.of(user));
 		Object object = Customer.receive().get(0);
 		if( object instanceof User ){
+			User success = (User) object;
+			try {
+				success.setPassword(AESCrypto.decrypt(user.getPassword()));
+			} catch ( Exception e ) {
+				System.out.println("decrypt error" + e );
+			}
 			System.out.println("註冊成功:\n" + object);
 		} else if (object instanceof String ) {
 			System.out.println(Helper.longLine);
@@ -70,10 +82,21 @@ public class Customer {
 		while ( true ) {
 			System.out.println("Login: ");
 			User attempt = User.requireLogin();
+			try {
+				attempt.setPassword(AESCrypto.encrypt(attempt.getPassword()));
+			} catch ( Exception e ) {
+				System.out.println("encrypt error" + e );
+			}
 			Customer.send(Action.Browse, List.of(attempt));
 			Object object= Customer.receive().get(0);
 			if( object instanceof User ){
-				return (User) object;
+				User success = (User) object;
+				try {
+					success.setPassword(AESCrypto.decrypt(success.getPassword()));
+				} catch ( Exception e ) {
+					System.out.println("decrypt error" + e );
+				}
+				return success;
 			} else if (object instanceof String ) {
 				System.out.println(Helper.longLine);
 				System.out.println("error: " + object);
@@ -116,10 +139,21 @@ public class Customer {
 				System.out.println(e.getMessage());
 			}
 		}
+		try {
+			user.setPassword(AESCrypto.encrypt(user.getPassword()));
+		} catch ( Exception e ) {
+			System.out.println("encrypt error" + e );
+		}
 		Customer.send(Action.Update, List.of(user));
 		Object object = Customer.receive().get(0);
 		if( object instanceof User ) {
-			return (User) object;
+			User success = (User) object;
+			try {
+				success.setPassword(AESCrypto.decrypt(success.getPassword()));
+			} catch ( Exception e ) {
+				System.out.println("decrypt error" + e );
+			}
+			return success;
 		} else if ( object instanceof String ) {
 			System.out.println(Helper.longLine);
 			System.out.println("error: " + object);
