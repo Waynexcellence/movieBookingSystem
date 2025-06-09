@@ -126,7 +126,7 @@ public class Theater extends ReadOneObject implements Serializable {
 		Theater theater = new Theater();
 		Scanner scanner = new Scanner(System.in);
 		while ( true ) {
-            System.out.print("seatAmount: ");
+            System.out.print("seatAmount ( " + Movie.smallSeatAmount + " or " + Movie.largeSeatAmount + " ) : ");
 			try {
 				int seatAmount = scanner.nextInt();
 				scanner.nextLine();

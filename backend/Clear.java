@@ -24,7 +24,7 @@ public class Clear {
 			User user1 = null;
 			try {
 				user0 = new User(new Date(2000, 1, 1), AESCrypto.encrypt("pass0"), "mail0", true, 0);
-				user1 = new User(new Date(2001, 2, 2), AESCrypto.encrypt("pass1"), "mail1", true, 1);
+				user1 = new User(new Date(2008, 8, 8), AESCrypto.encrypt("pass1"), "mail1", true, 1);
 			} catch ( Exception e ) {
 				System.out.println("encrypt error" + e );
 			}
@@ -58,14 +58,32 @@ public class Clear {
 			Movie.writeMovie(movie4);
 			Movie.writeMovie(movie5);
 
-			Ticket ticket0 = new Ticket(movie0.getUid(), user0.getUid(), new Seat('L', 12, Color.Back[3]), true, 0);
-			Ticket ticket1 = new Ticket(movie0.getUid(), user1.getUid(), new Seat('L', 13, Color.Back[3]), true, 1);
-			Ticket ticket2 = new Ticket(movie1.getUid(), user0.getUid(), new Seat('I', 15, Color.Back[7]), true, 2);
-			Ticket ticket3 = new Ticket(movie1.getUid(), user1.getUid(), new Seat('I', 16, Color.Back[7]), true, 3);
-			Ticket.writeTicket(ticket0);
-			Ticket.writeTicket(ticket1);
-			Ticket.writeTicket(ticket2);
-			Ticket.writeTicket(ticket3);
+			Ticket ticket00 = new Ticket(movie0.getUid(), user0.getUid(), new Seat('H', 18, Color.Back[3]), true,  0);
+			Ticket ticket01 = new Ticket(movie0.getUid(), user0.getUid(), new Seat('I', 18, Color.Back[1]), true,  1);
+			Ticket ticket02 = new Ticket(movie0.getUid(), user0.getUid(), new Seat('J', 18, Color.Back[1]), true,  2);
+			Ticket ticket03 = new Ticket(movie1.getUid(), user0.getUid(), new Seat('B',  8, Color.Back[7]), true,  3);
+			Ticket ticket04 = new Ticket(movie1.getUid(), user0.getUid(), new Seat('C',  8, Color.Back[7]), true,  4);
+			Ticket ticket05 = new Ticket(movie1.getUid(), user0.getUid(), new Seat('D',  8, Color.Back[7]), true,  5);
+
+			Ticket ticket10 = new Ticket(movie0.getUid(), user1.getUid(), new Seat('H', 20, Color.Back[3]), true,  6);
+			Ticket ticket11 = new Ticket(movie0.getUid(), user1.getUid(), new Seat('I', 20, Color.Back[1]), true,  7);
+			Ticket ticket12 = new Ticket(movie0.getUid(), user1.getUid(), new Seat('J', 20, Color.Back[1]), true,  8);
+			Ticket ticket13 = new Ticket(movie1.getUid(), user1.getUid(), new Seat('B', 10, Color.Back[7]), true,  9);
+			Ticket ticket14 = new Ticket(movie1.getUid(), user1.getUid(), new Seat('C', 10, Color.Back[7]), true, 10);
+			Ticket ticket15 = new Ticket(movie1.getUid(), user1.getUid(), new Seat('D', 10, Color.Back[7]), true, 11);
+			Ticket.writeTicket(ticket00);
+			Ticket.writeTicket(ticket01);
+			Ticket.writeTicket(ticket02);
+			Ticket.writeTicket(ticket03);
+			Ticket.writeTicket(ticket04);
+			Ticket.writeTicket(ticket05);
+
+			Ticket.writeTicket(ticket10);
+			Ticket.writeTicket(ticket11);
+			Ticket.writeTicket(ticket12);
+			Ticket.writeTicket(ticket13);
+			Ticket.writeTicket(ticket14);
+			Ticket.writeTicket(ticket15);
 			for(User item:User.readAll()){
 				try {
 					System.out.println(item.getPassword());

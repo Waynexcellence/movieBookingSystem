@@ -134,7 +134,7 @@ public class Film extends ReadOneObject implements Serializable {
 			break;
 		}
 		while ( true ) {
-			System.out.print("時長: ");
+			System.out.print("時長 (1~3小時): ");
 			try {
 				int length = scanner.nextInt();
 				scanner.nextLine();
@@ -153,7 +153,7 @@ public class Film extends ReadOneObject implements Serializable {
 			break;
 		}
 		while ( true ) {
-			System.out.print("分級: ");
+			System.out.print("分級 ( 0, 9, 12, 15, 18) : ");
 			try {
 				int classification = scanner.nextInt();
 				scanner.nextLine();
@@ -259,6 +259,7 @@ public class Film extends ReadOneObject implements Serializable {
 		if( classification<0 ) throw new IllegalArgumentException("Invalid classification: " + classification);
 		if( classification>18 ) throw new IllegalArgumentException("Invalid classification: " + classification);
 		if( classification == 3 ) throw new IllegalArgumentException("Invalid classification: " + classification);
+		if( classification == 6 ) throw new IllegalArgumentException("Invalid classification: " + classification);
 		if( classification%3>0 ) throw new IllegalArgumentException("Invalid classification: " + classification);
 		this.classification = classification;
 	}
