@@ -20,6 +20,7 @@ public class Server {
 	private static final ReentrantLock ticketLock = new ReentrantLock();
 
 	private static final ConcurrentLinkedQueue<Socket> clientSockets = new ConcurrentLinkedQueue<>();
+	private static Set<String> loggedInUsers = new HashSet<>();
 
 	public static Conversation receive(Socket socket) {
 		Conversation conversation = null;
@@ -115,7 +116,8 @@ public class Server {
 			else 		response.add("Customer Update What?");
 		} else if ( task.action == Action.Delete ) {
 			if 			( obj0 instanceof Ticket ) 			response = Server.handleDeleteTicket((Ticket) obj0);
-			else 		response.add("Customer Update What?");
+			else if 	( obj0 instanceof User ) 			response = Server.handleDeleteUser((User) obj0);
+			else 		response.add("Customer Delete What?");
 		} else 			response.add("Customer What?");
 		return response;
 	}
@@ -166,15 +168,22 @@ public class Server {
 		for ( User existed : User.readAll() ) {
 			if( !existed.getValid() ) continue;
 			if( existed.getMail().equals(user.getMail()) ){
-				if( existed.getPassword().equals(user.getPassword()) ){
-					response.add(existed);
-					return response;
-				}
-				response.add("Password Incorrect.");
+				// 檢查密碼是否一致
+				if( !existed.getPassword().equals(user.getPassword()) ) {
+                    response.add("密碼錯誤.");
+                    return response;
+                }
+				// 檢查是否已經登入
+                if( loggedInUsers.contains(existed.getMail()) ) {
+                    response.add("使用者已從其他裝置上登入.");
+                    return response;
+                }
+				loggedInUsers.add(existed.getMail());
+				response.add(existed);
 				return response;
 			}
 		}
-		response.add("User Not Found.");
+		response.add("查無此帳戶.");
 		return response;
 	}
 	// customer: return a valid user if customer update it successfully by its uid
@@ -182,10 +191,33 @@ public class Server {
 		System.out.println("Receive User Update:\n" + user);
 		List<Object> response = new ArrayList<>();
 		if( User.isRepeatedMail(user) ){
-			response.add("Repeated mail with others.");
+			response.add("與其他使用者信箱重複.");
 			return response;
 		}
+		User original = User.readUser(user.getUid());
+		if( !original.getMail().equals(user.getMail()) ) {
+			// 使用者改名，已登入的名單中也要改名
+			loggedInUsers.remove(original.getMail());
+			loggedInUsers.add(user.getMail());
+		}
 		User.writeUser(user);
+		response.add(user);
+		return response;
+	}
+	// customer: return a invalid user if customer logout it successfully
+	private static List<Object> handleDeleteUser(User user) {
+		System.out.println("Receive User Delete:\n" + user);
+		List<Object> response = new ArrayList<>();
+		if( !user.getValid() || user.getUid()<0 ) {
+			response.add("無法登出,此為非法帳號");
+			return response;
+		}
+		if( !loggedInUsers.contains(user.getMail()) ) {
+			response.add("伺服器錯誤,無法登出");
+			return response;
+		}
+		loggedInUsers.remove(user.getMail());
+		user.setValid(false);
 		response.add(user);
 		return response;
 	}

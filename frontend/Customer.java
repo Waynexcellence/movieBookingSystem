@@ -162,6 +162,23 @@ public class Customer {
 		user = origin;
 		return user;
 	}
+	private static User deleteUser(User user) {							// delete user = logout user
+		if( user==null || user.getUid()<0 || !user.getValid() ){
+			System.out.println("尚未登入.");
+			return new User();
+		}
+		Customer.send(Action.Delete, List.of(user));
+		Object object = Customer.receive().get(0);
+		if( object instanceof User ) {
+			return (User) object;
+		} else if ( object instanceof String ) {
+			System.out.println(Helper.longLine);
+			System.out.println("error: " + object);
+			System.out.println(Helper.longLine);
+			return user;
+		}
+		return (User) object;
+	}
 	private static List<Movie> browseMovie(User user) {					// browse all valid movies
 		if( user==null || user.getUid()<0 || !user.getValid() ){
 			System.out.println("尚未登入.");
@@ -298,6 +315,15 @@ public class Customer {
 		Customer.connect();
 		System.out.println("歡迎來到電影院訂票系統");
 		User user = null;
+		final User[] currentUser = new User[1];
+
+		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+			if( currentUser[0]!=null && currentUser[0].getValid() ) {
+				User logout = Customer.deleteUser(currentUser[0]);		// 呼叫前端的 logout
+				System.out.println("已自動登出使用者 : " + logout.getMail());
+			}
+		}));
+
 		while (true) {
 			if( user==null || user.getUid()<0 || !user.getValid() ) {
 				StringBuilder sb = new StringBuilder();
@@ -315,6 +341,7 @@ public class Customer {
 						System.out.println(Helper.longLine);
 						System.out.println("登入成功:\n" + user);
 						System.out.println(Helper.longLine);
+						currentUser[0] = user;
 					}
 				}
 				if( action == 'e' ){
@@ -370,9 +397,11 @@ public class Customer {
 				if( action == '5' ) {
 					user = Customer.updateUser(user);
 					System.out.println("以下是你成功更新的使用者資訊:\n" + user );
+					currentUser[0] = user;
 				}
 				if( action == '6' ) {
-					user = null;
+					user = Customer.deleteUser(user);
+					currentUser[0] = user;
 				}
 			}
 
